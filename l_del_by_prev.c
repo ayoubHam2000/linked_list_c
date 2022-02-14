@@ -6,7 +6,7 @@
 /*   By: aben-ham <aben-ham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 23:45:42 by aben-ham          #+#    #+#             */
-/*   Updated: 2022/01/28 03:17:50 by aben-ham         ###   ########.fr       */
+/*   Updated: 2022/02/14 13:52:33 by aben-ham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	l_del_by_prev(t_list *list, t_node *prev, void (*del_ptr)(void *p))
 {
 	t_node	*node;
 
-	if (!list || !l_len(list))
+	if (!list || !(list->len))
 		return ;
 	if (!prev)
 	{
