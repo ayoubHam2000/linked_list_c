@@ -6,61 +6,50 @@
 /*   By: aben-ham <aben-ham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/14 13:13:53 by aben-ham          #+#    #+#             */
-/*   Updated: 2022/02/14 14:49:54 by aben-ham         ###   ########.fr       */
+/*   Updated: 2022/02/15 16:01:24 by aben-ham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "linked_list.h"
 #include <stdio.h>
 
-int	*p_int(int a)
+void	*p_int(int a)
 {
 	int	*p;
 
-	p = malloc(sizeof(int));
-	if (p)
-		*p = a;
+	p = malloc(4);
+	*p = a;
 	return (p);
 }
 
-void	*clone_int(void *p)
+void	*c_int(void *p)
 {
-	int	*new;
+	int	*n;
 
-	if (p)
-	{
-		new = malloc(sizeof(int));
-		*new = *((int *)p);
-		return (new);
-	}
-	return (NULL);
+	n = malloc(4);
+	*n = *((int *)p);
+	return (n);
 }
 
-int	main()
+int	main(void)
 {
 	t_list	*list;
-	t_list	*clone_list;
+	t_list	*c_list;
 	t_node	*node;
 
 	list = l_init();
-	l_append_end(list, p_int(1));
-	l_append_end(list, p_int(22));
-	l_append_end(list, p_int(3));
-	l_append_end(list, p_int(4));
-	printf("len = %ld\n", list->len);
-	
-	clone_list = l_clone(list, clone_int);
-
-	node = clone_list->head;
+	l_append_end(list, p_int(10));
+	l_append_end(list, p_int(18));
+	l_append_end(list, p_int(8));
+	c_list = l_clone(list, c_int);
+	node = c_list->head;
 	while (node)
 	{
-		printf("%d -> ", *((int *)(node->p)));
+		if (node->p)
+			printf("%d, ", *((int *)(node->p)));
 		node = node->next;
 	}
-	l_del_all(clone_list, NULL);
-	free(clone_list);
-	l_del_all(list, NULL);
-	free(list);
+	printf("\n");
 	system("leaks linked_list");
 	return (0);
 }

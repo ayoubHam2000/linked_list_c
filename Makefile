@@ -6,7 +6,7 @@
 #    By: aben-ham <aben-ham@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/14 13:18:13 by aben-ham          #+#    #+#              #
-#    Updated: 2022/02/14 13:52:47 by aben-ham         ###   ########.fr        #
+#    Updated: 2022/02/15 14:09:41 by aben-ham         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,11 +17,10 @@ FILES = \
 		l_append_index.c \
 		l_clone.c \
 		l_create_node.c \
-		l_del_all.c \
+		l_clear.c \
 		l_del_by_index.c \
 		l_del_by_prev.c \
 		l_del_cond.c \
-		l_del_node.c \
 		l_get.c \
 		l_init.c \
 		main.c

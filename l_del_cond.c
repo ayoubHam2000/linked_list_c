@@ -6,21 +6,15 @@
 /*   By: aben-ham <aben-ham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 16:58:16 by aben-ham          #+#    #+#             */
-/*   Updated: 2022/01/28 19:23:38 by aben-ham         ###   ########.fr       */
+/*   Updated: 2022/02/15 14:00:33 by aben-ham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "linked_list.h"
 
-static void	del_head(t_list *list, void (*del_ptr)(void *p))
+static void	l_default_del_ptr(void	*p)
 {
-	t_node	*tmp;
-
-	if (list->head == list->last)
-		list->last = NULL;
-	tmp = list->head->next;
-	l_del_node(list->head, del_ptr);
-	list->head = tmp;
+	free(p);
 }
 
 static void	del_target(
@@ -28,13 +22,23 @@ static void	del_target(
 				t_node *prev, void (*del_ptr)(void *p)
 				)
 {
+	t_node	*tmp;
+
 	if (target == list->head)
-		del_head(list, del_ptr);
+	{
+		if (list->head == list->last)
+			list->last = NULL;
+		tmp = list->head->next;
+		del_ptr(list->head->p);
+		free(list->head);
+		list->head = tmp;
+	}
 	else
 	{
 		if (target == list->last)
 			list->last = prev;
-		l_del_node(target, del_ptr);
+		del_ptr(target->p);
+		free(target);
 	}
 	list->len--;
 }
@@ -51,6 +55,8 @@ void	l_del_cond(
 
 	if (!list || !condition)
 		return ;
+	if (!del_ptr)
+		del_ptr = l_default_del_ptr;
 	node = list->head;
 	prev = NULL;
 	while (node)
@@ -62,11 +68,9 @@ void	l_del_cond(
 			del_target(list, target, prev, del_ptr);
 			if (prev)
 				prev->next = node;
+			continue ;
 		}
-		else
-		{
-			prev = node;
-			node = node->next;
-		}
+		prev = node;
+		node = node->next;
 	}
 }
